@@ -1,4 +1,3 @@
-// layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -14,11 +13,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Metadata can be exported from a server component
+// Define viewport configuration separately
+const viewportConfig = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+}
+
+// Metadata with properly structured viewport
 export const metadata: Metadata = {
   title: "LabBrats",
   description: "Interactive lab experience platform",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1"
+  // Next.js will automatically move this to the proper export when building
+  viewport: viewportConfig,
 };
 
 export default function RootLayout({
