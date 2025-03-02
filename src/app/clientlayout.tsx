@@ -295,7 +295,7 @@ export default function ClientLayout({
       <header className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4">
         <div className="px-6">
           <Link href="/">
-            <h1 className="text-2xl font-bold cursor-pointer hover:text-blue-100 transition-colors">LabBrats</h1>
+            <h1 className="text-2xl font-bold cursor-pointer hover:text-blue-100 transition-colors">RareLink</h1>
           </Link>
         </div>
       </header>
