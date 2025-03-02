@@ -25,7 +25,7 @@ interface Conversation {
 export default function ChatPage() {
   // Chat state: conversations list or specific chat
   const [view, setView] = useState<'conversations' | 'chat'>('conversations');
-  
+
   // Sample conversations data (replace with API call in production)
   const [conversations, setConversations] = useState<Conversation[]>([
     {
@@ -68,26 +68,26 @@ export default function ChatPage() {
 
   // Currently selected conversation
   const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null);
-  
+
   // Messages for the current conversation
   const [messages, setMessages] = useState<Message[]>([]);
-  
+
   // New message input
   const [newMessage, setNewMessage] = useState('');
 
   // Open a specific chat
   const openChat = (conversation: Conversation) => {
     setCurrentConversation(conversation);
-    
+
     // Mark conversation as read
-    setConversations(prevConversations => 
-      prevConversations.map(conv => 
-        conv.id === conversation.id 
-          ? { ...conv, unreadCount: 0 } 
+    setConversations(prevConversations =>
+      prevConversations.map(conv =>
+        conv.id === conversation.id
+          ? { ...conv, unreadCount: 0 }
           : conv
       )
     );
-    
+
     // Fetch or set messages for this conversation
     // In production, you would fetch these from your API
     setMessages([
@@ -116,14 +116,14 @@ export default function ChatPage() {
         isRead: conversation.unreadCount === 0,
       },
     ]);
-    
+
     setView('chat');
   };
 
   // Send a new message
   const sendMessage = () => {
     if (!newMessage.trim() || !currentConversation) return;
-    
+
     // Create a new message
     const message: Message = {
       id: Date.now().toString(),
@@ -133,26 +133,26 @@ export default function ChatPage() {
       timestamp: new Date(),
       isRead: true,
     };
-    
+
     // Add message to the current conversation
     setMessages([...messages, message]);
-    
+
     // Update the conversation with the new last message
-    setConversations(prevConversations => 
-      prevConversations.map(conv => 
-        conv.id === currentConversation.id 
-          ? { 
-              ...conv, 
-              lastMessage: newMessage,
-              lastMessageTime: new Date(),
-            } 
+    setConversations(prevConversations =>
+      prevConversations.map(conv =>
+        conv.id === currentConversation.id
+          ? {
+            ...conv,
+            lastMessage: newMessage,
+            lastMessageTime: new Date(),
+          }
           : conv
       )
     );
-    
+
     // Clear the input
     setNewMessage('');
-    
+
     // In production, you would send this message to your API
   };
 
@@ -168,17 +168,17 @@ export default function ChatPage() {
   const formatTime = (date: Date) => {
     const now = new Date();
     const diff = now.getTime() - date.getTime();
-    
+
     // If less than 24 hours, show time
     if (diff < 24 * 60 * 60 * 1000) {
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
-    
+
     // If less than 7 days, show day name
     if (diff < 7 * 24 * 60 * 60 * 1000) {
       return date.toLocaleDateString([], { weekday: 'short' });
     }
-    
+
     // Otherwise show date
     return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
   };
@@ -189,7 +189,7 @@ export default function ChatPage() {
       <header className="bg-white p-4 border-b">
         <div className="flex items-center">
           {view === 'chat' && (
-            <button 
+            <button
               onClick={() => setView('conversations')}
               className="mr-3 text-gray-500 hover:text-gray-700"
               aria-label="Back to conversations"
@@ -209,7 +209,7 @@ export default function ChatPage() {
           // Conversations list
           <div className="divide-y">
             {conversations.map(conversation => (
-              <div 
+              <div
                 key={conversation.id}
                 onClick={() => openChat(conversation)}
                 className="flex items-center p-4 bg-white hover:bg-gray-50 cursor-pointer"
@@ -244,7 +244,7 @@ export default function ChatPage() {
           // Individual chat
           <div className="p-4 space-y-4">
             {messages.map(message => (
-              <div 
+              <div
                 key={message.id}
                 className={`flex ${message.senderId === 'currentUser' ? 'justify-end' : 'justify-start'}`}
               >
@@ -253,11 +253,10 @@ export default function ChatPage() {
                     {currentConversation?.participantAvatar}
                   </div>
                 )}
-                <div className={`max-w-xs md:max-w-md px-4 py-2 rounded-lg ${
-                  message.senderId === 'currentUser'
-                    ? 'bg-blue-600 text-white rounded-br-none'
-                    : 'bg-white text-gray-800 rounded-bl-none shadow'
-                }`}>
+                <div className={`max-w-xs md:max-w-md px-4 py-2 rounded-lg ${message.senderId === 'currentUser'
+                  ? 'bg-blue-600 text-white rounded-br-none'
+                  : 'bg-white text-gray-800 rounded-bl-none shadow'
+                  }`}>
                   <p>{message.content}</p>
                   <div className={`text-right text-xs mt-1 ${message.senderId === 'currentUser' ? 'text-blue-100' : 'text-gray-500'}`}>
                     {formatTime(message.timestamp)}
@@ -284,11 +283,10 @@ export default function ChatPage() {
             <button
               onClick={sendMessage}
               disabled={!newMessage.trim()}
-              className={`ml-2 p-3 rounded-full ${
-                newMessage.trim() 
-                  ? 'bg-blue-600 text-white hover:bg-blue-700' 
-                  : 'bg-gray-200 text-gray-400'
-              }`}
+              className={`ml-2 p-3 rounded-full ${newMessage.trim()
+                ? 'bg-blue-600 text-white hover:bg-blue-700'
+                : 'bg-gray-200 text-gray-400'
+                }`}
               aria-label="Send message"
             >
               <MessageCircle size={20} />

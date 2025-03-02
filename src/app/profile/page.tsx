@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function Profile() {
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
@@ -32,8 +33,14 @@ export default function Profile() {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
+  }, []);
+
   const handleLogout = async () => {
     await fetch("/api/logout", { method: "POST", credentials: "include" });
+    localStorage.setItem("isLoggedIn", "false");
     router.push("/");
   };
 
