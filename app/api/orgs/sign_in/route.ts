@@ -1,13 +1,13 @@
 "use server";
 
 import { compare } from "bcryptjs";
-import { users } from "../db";
+import { orgs } from "../../db";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const found = await users.findOne({ email: body.email });
+    const found = await orgs.findOne({ email: body.email });
 
     if (!found) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

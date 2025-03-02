@@ -1,7 +1,7 @@
 "use server";
 
 import { hash } from "bcryptjs";
-import { users } from "../db";
+import { users } from "../../db";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -27,10 +27,6 @@ export async function POST(req: Request) {
       country: body.country,
       patient: body.patient,
       disease: body.disease,
-      genes: body.genes,
-      animal: body.animal,
-      verb: body.verb,
-      adjective: body.adjective,
     });
 
     return NextResponse.json(
