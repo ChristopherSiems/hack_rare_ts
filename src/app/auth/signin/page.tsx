@@ -34,7 +34,8 @@ export default function SignIn() {
       }
 
       if (res.ok) {
-        router.push("/"); // Redirect to home page
+        alert("Sign in successful!");
+        router.push("/");
       } else {
         alert(data.error || "Something went wrong");
       }

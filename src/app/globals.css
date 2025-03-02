@@ -15,7 +15,13 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+
+  .disease-suggestions {
+    color: #000000 !important; /* Force black text */
+    background-color: #ffffff !important; /* White background */
+  }
 }
+
 
 body {
   color: var(--foreground);
