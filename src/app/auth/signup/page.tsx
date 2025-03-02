@@ -70,19 +70,18 @@ export default function SignUp() {
     setDisease(value);
     
     if (value.trim() === '') {
-      setFilteredDiseases([]);
-      setShowSuggestions(false);
+        setFilteredDiseases([]); 
+        setShowSuggestions(false);
     } else {
-      // Case-insensitive search
-      const searchTerm = value.toLowerCase();
-      const filtered = diseases
-        .filter(d => d.toLowerCase().includes(searchTerm))
-        .slice(0, 5); // Limit to 5 suggestions
-      
-      setFilteredDiseases(filtered);
-      setShowSuggestions(filtered.length > 0);
+        const searchTerm = value.toLowerCase();
+        const filtered = diseases
+            .filter(d => d.toLowerCase().startsWith(searchTerm)) // Use startsWith instead of includes
+            .slice(0, 5); // Limit to 5 suggestions
+        
+        setFilteredDiseases(filtered);
+        setShowSuggestions(filtered.length > 0);
     }
-  };
+};
 
   // Select disease from suggestions
   const selectDisease = (selected: string) => {
