@@ -18,35 +18,35 @@ const markerData = [
     id: 1, 
     lat: 25, 
     lng: 15, 
-    icon: "/markers/red-marker.svg",  // Replace with your actual icon paths
+    icon: "/userx.svg",  // Replace with your actual icon paths
     title: "Paris Event"
   },
   { 
     id: 2, 
     lat: 23, 
     lng: 22, 
-    icon: "/markers/blue-marker.svg", 
+    icon: "/userx.svg", 
     title: "London Exhibition"
   },
   { 
     id: 3, 
     lat: 34, 
     lng: 60, 
-    icon: "/markers/yellow-marker.svg", 
+    icon: "/userx.svg", 
     title: "Tokyo Festival"
   },
   { 
     id: 4, 
     lat: 39, 
     lng: 77, 
-    icon: "/markers/purple-marker.svg", 
+    icon: "/userx.svg", 
     title: "Seoul Conference"
   },
   { 
     id: 5, 
     lat: 48, 
     lng: 40, 
-    icon: "/markers/red-marker.svg", 
+    icon: "/userx.svg", 
     title: "Moscow Exhibition"
   },
 ];
