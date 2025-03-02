@@ -13,14 +13,28 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
 
   // Form submission handler
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     
-    // Simple authentication for demo (replace with real auth)
-    localStorage.setItem("isLoggedIn", "true");
-    
-    // Redirect to home page after login
-    router.push("/");
+    try {
+      const res = await fetch("/api/users/sign_in", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Sign in successful!");
+        router.push("/auth/signin");
+      } else {
+        alert(data.error || "Something went wrong");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("Internal Server Error");
+    }
   };
 
   return (

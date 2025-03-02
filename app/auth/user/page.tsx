@@ -16,8 +16,8 @@ export default function SignUpOption() {
     e.preventDefault();
 
     // Check selected option and navigate accordingly
-    if (selectedOption === "option1" || selectedOption === "option2") {
-      // Redirect to this signup page if Option 1 or Option 2 is chosen
+    if (selectedOption === "option1" ) {
+      // Redirect to this signup page if Option 1 is chosen
       router.push("/auth/signup");
     } else if (selectedOption === "option3") {
       // Redirect to another signup page for Option 3
@@ -50,20 +50,6 @@ export default function SignUpOption() {
               className="mr-2"
             />
             <label htmlFor="option1" className="text-lg">Patient</label>
-          </div>
-
-          {/* Option 2 */}
-          <div>
-            <input
-              type="radio"
-              id="option2"
-              name="option"
-              value="option2"
-              checked={selectedOption === "option2"}
-              onChange={(e) => setSelectedOption(e.target.value)}
-              className="mr-2"
-            />
-            <label htmlFor="option2" className="text-lg">Parent</label>
           </div>
 
           {/* Option 3 */}
