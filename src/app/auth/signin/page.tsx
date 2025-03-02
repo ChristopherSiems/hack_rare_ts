@@ -35,6 +35,7 @@ export default function SignIn() {
 
       if (res.ok) {
         alert("Sign in successful!");
+        localStorage.setItem("isLoggedIn", "true");
         router.push("/");
       } else {
         alert(data.error || "Something went wrong");
