@@ -1,4 +1,12 @@
 {
+  "theme": {
+    "extend": {
+      "colors": {
+        "custom-offwhite": "#f5f5f1",
+        "custom-blue": "#6bafea"
+      }
+    }
+  }, 
   "compilerOptions": {
     "target": "ES2017",
     "lib": [
