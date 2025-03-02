@@ -49,7 +49,7 @@ export default function SignUpOption() {
               onChange={(e) => setSelectedOption(e.target.value)}
               className="mr-2"
             />
-            <label htmlFor="option1" className="text-lg">Patient</label>
+            <label htmlFor="option1" className="text-lg text-black">Patient</label>
           </div>
 
           {/* Option 3 */}
@@ -63,7 +63,7 @@ export default function SignUpOption() {
               onChange={(e) => setSelectedOption(e.target.value)}
               className="mr-2"
             />
-            <label htmlFor="option3" className="text-lg">Organization</label>
+            <label htmlFor="option3" className="text-lg text-black">Organization</label>
           </div>
         </div>
 
