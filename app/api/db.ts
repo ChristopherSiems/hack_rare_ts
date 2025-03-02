@@ -8,4 +8,6 @@ if (!MONGODB_URI) {
 }
 
 const client = await MongoClient.connect(MONGODB_URI);
-export const users = client.db("hackrare").collection("users");
+const db = client.db("hackrare");
+export const users = db.collection("users");
+export const orgs = db.collection("orgs");
