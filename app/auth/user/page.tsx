@@ -16,13 +16,14 @@ export default function SignUpOption() {
     e.preventDefault();
 
     // Check selected option and navigate accordingly
-    if (selectedOption === "option1" ) {
+    if (selectedOption === "option1") {
       // Redirect to this signup page if Option 1 is chosen
       router.push("/auth/signup");
     } else if (selectedOption === "option3") {
       // Redirect to another signup page for Option 3
-      router.push("/auth/organization");} 
-      else {
+      router.push("/auth/organization");
+    }
+    else {
       alert("Please select an option before submitting.");
     }
   };
@@ -49,7 +50,7 @@ export default function SignUpOption() {
               onChange={(e) => setSelectedOption(e.target.value)}
               className="mr-2"
             />
-            <label htmlFor="option1" className="text-lg">Patient</label>
+            <label htmlFor="option1" className="text-lg text-black">Patient</label>
           </div>
 
           {/* Option 3 */}
@@ -63,7 +64,7 @@ export default function SignUpOption() {
               onChange={(e) => setSelectedOption(e.target.value)}
               className="mr-2"
             />
-            <label htmlFor="option3" className="text-lg">Organization</label>
+            <label htmlFor="option3" className="text-lg text-black">Organization</label>
           </div>
         </div>
 
