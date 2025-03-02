@@ -1,29 +1,124 @@
 "use client"; // Client component directive
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function SignUp() {
   // Initialize router for navigation after signup
   const router = useRouter();
-  
+
   // State for form inputs
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disease, setDisease] = useState("");
-  const [location, setLocation] = useState("");
+  const [country, setLocation] = useState("");
 
-  // Form submission handler
-  const handleSubmit = (e: React.FormEvent) => {
+  // State for disease suggestions
+  const [diseases, setDiseases] = useState<string[]>([]);
+  const [filteredDiseases, setFilteredDiseases] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  // Sample fallback data in case file loading fails
+  const SAMPLE_DISEASES = [
+    "Autosomal dominant polycystic kidney disease",
+    "Autosomal recessive polycystic kidney disease",
+    "Autoimmune hepatitis",
+    "Autism spectrum disorder",
+    "Asthma",
+    "Alzheimer's disease"
+  ];
+
+  // Fetch diseases from the disease.txt file
+  useEffect(() => {
+    const fetchDiseases = async () => {
+      setIsLoading(true);
+      try {
+        // Since we know the exact path, we'll create an API endpoint to access it
+        const response = await fetch('/api/diseases');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.diseases && data.diseases.length > 0) {
+            setDiseases(data.diseases);
+            console.log(`Loaded ${data.diseases.length} diseases from API`);
+          } else {
+            console.log("API returned empty diseases list, using fallback data");
+            setDiseases(SAMPLE_DISEASES);
+          }
+        } else {
+          console.error("Failed to fetch diseases from API, using fallback data");
+          setDiseases(SAMPLE_DISEASES);
+        }
+      } catch (error) {
+        console.error('Error loading diseases:', error);
+        setDiseases(SAMPLE_DISEASES);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDiseases();
+  }, []);
+
+  // Filter diseases based on input
+  const handleDiseaseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDisease(value);
+
+    if (value.trim() === '') {
+      setFilteredDiseases([]);
+      setShowSuggestions(false);
+    } else {
+      const searchTerm = value.toLowerCase();
+      const filtered = diseases
+        .filter(d => d.toLowerCase().startsWith(searchTerm)) // Use startsWith instead of includes
+        .slice(0, 5); // Limit to 5 suggestions
+
+      setFilteredDiseases(filtered);
+      setShowSuggestions(filtered.length > 0);
+    }
+  };
+
+  // Select disease from suggestions
+  const selectDisease = (selected: string) => {
+    setDisease(selected);
+    setShowSuggestions(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Simple user registration (replace with real auth)
-    localStorage.setItem("isLoggedIn", "true");
-    
-    // Redirect to home page after signup
-    router.push("/");
+
+    try {
+      const res = await fetch("/api/orgs/sign_up", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, disease, country }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // Store user information in localStorage
+        localStorage.setItem("userEmail", email);
+        localStorage.setItem("userData", JSON.stringify({
+          name,
+          email,
+          disease,
+          country
+        }));
+
+        alert("Signup successful!");
+        router.push("/auth/signin");
+      } else {
+        alert(data.error || "Something went wrong");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("Internal Server Error");
+    }
   };
 
   return (
@@ -33,7 +128,7 @@ export default function SignUp() {
           Create your account
         </h2>
       </div>
-      
+
       {/* Registration form */}
       <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
         <div className="rounded-md shadow-sm -space-y-px">
@@ -54,7 +149,7 @@ export default function SignUp() {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          
+
           {/* Email input field */}
           <div>
             <label htmlFor="email-address" className="sr-only">
@@ -72,7 +167,7 @@ export default function SignUp() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          
+
           {/* Password input field */}
           <div>
             <label htmlFor="password" className="sr-only">
@@ -90,40 +185,70 @@ export default function SignUp() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
-          {/* Disease type input field */}
-          <div>
+          {/* Disease type input field with autocomplete */}
+          <div className="relative">
             <label htmlFor="disease" className="sr-only">
-              Location
+              Disease
             </label>
             <input
-              id="diseease"
+              id="disease"
               name="disease"
-              type="disease"
-              autoComplete="disease"
+              type="text"
+              autoComplete="off"
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
               placeholder="Disease name"
-              value={password}
-              onChange={(e) => setDisease(e.target.value)}
+              value={disease}
+              onChange={handleDiseaseChange}
+              onFocus={() => {
+                if (disease.trim() !== '') {
+                  const filtered = diseases
+                    .filter(d => d.toLowerCase().includes(disease.toLowerCase()))
+                    .slice(0, 5);
+                  setFilteredDiseases(filtered);
+                  setShowSuggestions(filtered.length > 0);
+                }
+              }}
             />
-          </div>
-        
 
-        {/* Location */}
-        <div>
-            <label htmlFor="location" className="sr-only">
+            {/* Suggestions dropdown */}
+            {showSuggestions && filteredDiseases.length > 0 && (
+              <div className="absolute z-10 w-full bg-white text-black border border-gray-300 rounded-b-md shadow-lg max-h-60 overflow-y-auto">
+                <ul className="py-1">
+                  {filteredDiseases.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                      onClick={() => selectDisease(suggestion)}
+                      onMouseDown={(e) => {
+                        // Prevent the onBlur from firing before the click
+                        e.preventDefault();
+                      }}
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+
+
+          {/* Location */}
+          <div>
+            <label htmlFor="country" className="sr-only">
               Location
             </label>
             <input
               id="locaton"
-              name="location"
-              type="location"
-              autoComplete="location"
+              name="country"
+              type="country"
+              autoComplete="country"
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
               placeholder="Location"
-              value={password}
+              value={country}
               onChange={(e) => setLocation(e.target.value)}
             />
           </div>
@@ -131,7 +256,7 @@ export default function SignUp() {
 
 
 
-        
+
 
         {/* Submit button */}
         <div>
@@ -142,7 +267,7 @@ export default function SignUp() {
             Sign up
           </button>
         </div>
-        
+
         {/* Link to signin page */}
         <div className="text-center">
           <p className="text-sm text-gray-600">

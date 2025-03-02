@@ -11,6 +11,7 @@ export default function Profile() {
     try {
       const res = await fetch("/api/users/profile", { credentials: "include" });
       const data = await res.json();
+      console.log(data);
 
       if (res.ok) {
         setUser(data);
