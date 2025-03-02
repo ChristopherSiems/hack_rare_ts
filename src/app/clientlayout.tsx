@@ -213,7 +213,7 @@ export default function ClientLayout({
 
 
       {/* Main content */}
-      <div className="min-h-screen pb-16">
+      <div className="min-h-screen pb-16 max-h-[calc(100vh-130px)] overflow-auto">
         {children}
       </div>
       
@@ -328,7 +328,7 @@ export default function ClientLayout({
       )}
 
      {/* Navigation Bar */}
-    <div className="w-full border-t border-blue-300 fixed bottom-0 bg-white z-40">
+    <div className="w-full border-t border-blue-300 nav-fixed bg-white">
       <div className="w-full mx-auto px-6">
         <div className="flex justify-around py-3">
           {/* Event Button */}

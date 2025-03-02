@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "LabBrats",
   description: "Interactive lab experience platform",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1"
 };
 
 export default function RootLayout({
