@@ -7,41 +7,41 @@ export default function EventsPage() {
   // Sample data for health awareness events
   const [events] = useState([
     {
-      id: 1,
-      title: "World Diabetes Day Awareness",
-      date: "November 14, 2025",
-      hashtags: ["#DiabetesAwareness", "#T1D", "#T2D", "#BlueCircle"],
-      description: "Join us for our annual Diabetes awareness campaign. Learn about prevention, management, and latest treatments. Free blood sugar screening available for all attendees.",
-      location: "City Community Center",
-      image: "/api/placeholder/600/400"
+      "id": 1,
+      "title": "Wolfram Syndrome UK Annual Conference 2025",
+      "date": "September 20, 2025",
+      "hashtags": ["#WolframSyndrome", "#WSUKConference", "#GeneticDisorders", "#RareDiseases"],
+      "description": "Join us for the annual Wolfram Syndrome UK Conference, where families, researchers, and medical experts connect to discuss the latest updates, treatments, and support resources. Free lunch and refreshments provided.",
+      "location": "Mercure Daventry Court Hotel, United Kingdom",
+      "image": "/flier/wolfram syndrome.jpg"
     },
     {
-      id: 2,
-      title: "Heart Health Month",
-      date: "February 10-28, 2025",
-      hashtags: ["#HeartHealth", "#CardiovascularDisease", "#GoRed"],
-      description: "February is Heart Health Month! Participate in our series of workshops, fitness activities, and seminars focused on cardiovascular health and disease prevention.",
-      location: "Memorial Hospital",
-      image: "/api/placeholder/600/400"
+      "id": 2,
+      "title": "Rare Disease Day Conference 2025",
+      "date": "February 28, 2025",
+      "hashtags": ["#RareDiseaseDay", "#ShowYourStripes", "#RareDiseases", "#Advocacy"],
+      "description": "Join us on Rare Disease Day to raise awareness, support research, and connect with experts and patient advocates. Engage in discussions on policy changes, new treatments, and community impact.",
+      "location": "National Institutes of Health, Maryland",
+      "image": "/flier/raredisease.jpg"
     },
     {
-      id: 3,
-      title: "Mental Health Awareness Walk",
-      date: "May 15, 2025",
-      hashtags: ["#MentalHealthMatters", "#EndTheStigma", "#MindfulnessWalk"],
-      description: "Take steps for mental health awareness. This 5K walk aims to reduce stigma and promote understanding of mental health conditions. Register now to support the cause.",
-      location: "Riverside Park",
-      image: "/api/placeholder/600/400"
-    },
+      "id": 3,
+      "title": "EURORDIS Rare Diseases Congress 2025",
+      "date": "May 15-17, 2025",
+      "hashtags": ["#EURORDIS", "#RareDiseaseEurope", "#HealthPolicy", "#OrphanDrugs"],
+      "description": "A European-wide event bringing together policymakers, researchers, and patient organizations. Discuss challenges in rare disease treatments, policy advancements, and collaborative solutions.",
+      "location": "Brussels, Belgium",
+      "image": "/flier/eurordis.png"
+    },    
     {
-      id: 4,
-      title: "Breast Cancer Screening Drive",
-      date: "October 8, 2025",
-      hashtags: ["#BreastCancerAwareness", "#ThinkPink", "#EarlyDetection"],
-      description: "Free mammogram screenings available for eligible women. Learn about self-examination techniques and risk factors. Together we can fight breast cancer through early detection.",
-      location: "Women's Health Clinic",
-      image: "/api/placeholder/600/400"
-    }
+      "id": 4,
+      "title": "NORD Rare Diseases Summit",
+      "date": "October 20-21, 2025",
+      "hashtags": ["#NORDSummit", "#OrphanDrugs", "#RareBreakthroughs", "#FDA"],
+      "description": "A premier event focusing on rare disease research, FDA regulatory updates, and industry innovations. Engage with top scientists, policymakers, and patient advocates.",
+      "location": "Washington, D.C.",
+      "image": "/flier/nord.webp"
+    }    
   ]);
 
   return (
