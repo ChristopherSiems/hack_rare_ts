@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import fs from 'fs/promises';
+import path from 'path';
 
 // Sample fallback data in case file loading fails
 const SAMPLE_DISEASES = [
@@ -15,40 +17,21 @@ const SAMPLE_DISEASES = [
 ];
 
 export default function SignUp() {
+  // Initialize router for navigation after signup
   const router = useRouter();
-
+  
   // State for form inputs
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disease, setDisease] = useState("");
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
-  const [diseases, setDiseases] = useState<string[]>([]); // State for disease suggestions
+  const [country, setCountry] = useState("");
+  
+  // State for disease suggestions
+  const [diseases, setDiseases] = useState<string[]>([]);
   const [filteredDiseases, setFilteredDiseases] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  // Fetch user's location when component mounts
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          setLatitude(lat);
-          setLongitude(lon);
-        },
-        (error) => {
-          console.error("Error fetching location:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  }, []);
-
-
 
   // Fetch diseases from the disease.txt file
   useEffect(() => {
@@ -77,7 +60,7 @@ export default function SignUp() {
         setIsLoading(false);
       }
     };
-
+    
     fetchDiseases();
   }, []);
 
@@ -85,20 +68,20 @@ export default function SignUp() {
   const handleDiseaseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setDisease(value);
-
+    
     if (value.trim() === '') {
-      setFilteredDiseases([]);
-      setShowSuggestions(false);
+        setFilteredDiseases([]); 
+        setShowSuggestions(false);
     } else {
-      const searchTerm = value.toLowerCase();
-      const filtered = diseases
-        .filter(d => d.toLowerCase().startsWith(searchTerm)) // Use startsWith instead of includes
-        .slice(0, 5); // Limit to 5 suggestions
-
-      setFilteredDiseases(filtered);
-      setShowSuggestions(filtered.length > 0);
+        const searchTerm = value.toLowerCase();
+        const filtered = diseases
+            .filter(d => d.toLowerCase().startsWith(searchTerm)) // Use startsWith instead of includes
+            .slice(0, 5); // Limit to 5 suggestions
+        
+        setFilteredDiseases(filtered);
+        setShowSuggestions(filtered.length > 0);
     }
-  };
+};
 
   // Select disease from suggestions
   const selectDisease = (selected: string) => {
@@ -109,17 +92,26 @@ export default function SignUp() {
   // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     try {
       const res = await fetch("/api/users/sign_up", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, disease, latitude, longitude }),
+        body: JSON.stringify({ name, email, password, disease, country }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
+        // Store user information in localStorage
+        localStorage.setItem("userEmail", email);
+        localStorage.setItem("userData", JSON.stringify({ 
+          name, 
+          email, 
+          disease, 
+          country 
+        }));
+        
         alert("Signup successful!");
         router.push("/auth/signin");
       } else {
@@ -143,7 +135,7 @@ export default function SignUp() {
           </p>
         )}
       </div>
-
+      
       {/* Registration form */}
       <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
         <div className="rounded-md shadow-sm -space-y-px">
@@ -164,7 +156,7 @@ export default function SignUp() {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-
+          
           {/* Email input field */}
           <div>
             <label htmlFor="email-address" className="sr-only">
@@ -182,7 +174,7 @@ export default function SignUp() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-
+          
           {/* Password input field */}
           <div>
             <label htmlFor="password" className="sr-only">
@@ -210,11 +202,7 @@ export default function SignUp() {
               id="disease"
               name="disease"
               type="text"
-<<<<<<< HEAD:app/auth/signup/page.tsx
-              autoComplete="disease"
-=======
               autoComplete="off"
->>>>>>> main:src/app/auth/signup/page.tsx
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
               placeholder="Disease name"
@@ -230,13 +218,13 @@ export default function SignUp() {
                 }
               }}
             />
-
+            
             {/* Suggestions dropdown */}
             {showSuggestions && filteredDiseases.length > 0 && (
               <div className="absolute z-10 w-full bg-white text-black border border-gray-300 rounded-b-md shadow-lg max-h-60 overflow-y-auto">
                 <ul className="py-1">
                   {filteredDiseases.map((suggestion, index) => (
-                    <li
+                    <li 
                       key={index}
                       className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
                       onClick={() => selectDisease(suggestion)}
@@ -252,50 +240,46 @@ export default function SignUp() {
               </div>
             )}
           </div>
-<<<<<<< HEAD:app/auth/signup/page.tsx
-=======
         
-          {/* Location */}
+          {/* Country */}
           <div>
-            <label htmlFor="location" className="sr-only">
-              Location
+            <label htmlFor="country" className="sr-only">
+              Country
             </label>
             <input
-              id="location"
-              name="location"
+              id="country"
+              name="country"
               type="text"
               autoComplete="address-level1"
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
             />
           </div>
->>>>>>> main:src/app/auth/signup/page.tsx
-        </div >
+        </div>
 
-    {/* Submit button */ }
-    < div >
-    <button
-      type="submit"
-      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-    >
-      Sign up
-    </button>
-        </div >
-
-    {/* Link to signin page */ }
-    < div className = "text-center" >
-      <p className="text-sm text-gray-600">
-        Already have an account?{" "}
-        <Link href="/auth/signin" className="text-blue-600 hover:text-blue-500">
-          Sign in
-        </Link>
-      </p>
-        </div >
-      </form >
-    </div >
+        {/* Submit button */}
+        <div>
+          <button
+            type="submit"
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Sign up
+          </button>
+        </div>
+        
+        {/* Link to signin page */}
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            Already have an account?{" "}
+            <Link href="/auth/signin" className="text-blue-600 hover:text-blue-500">
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </form>
+    </div>
   );
 }
-

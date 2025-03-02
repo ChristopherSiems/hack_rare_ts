@@ -1,38 +1,44 @@
-"use client"; // Client component directive
-
+"use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Profile() {
-  // Initialize router for navigation
   const router = useRouter();
-
-  // State to track loading status
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
-  // Check authentication when component mounts
-  useEffect(() => {
-    // Redirect to signin if not logged in
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    if (!isLoggedIn) {
+  const fetchUserData = async () => {
+    try {
+      const res = await fetch("/api/users/profile", { credentials: "include" });
+      const data = await res.json();
+
+      if (res.ok) {
+        setUser(data);
+      } else {
+        console.error("Error:", data.error);
+        router.push("/auth/signin");
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
       router.push("/auth/signin");
-    } else {
-      setLoading(false); // Stop loading if authenticated
+    } finally {
+      setLoading(false);
     }
-  }, [router]);
+  };
 
-  // Logout handler
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch("/api/logout", { method: "POST", credentials: "include" });
     router.push("/");
   };
 
-  // Show loading state while checking authentication
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
-  // Main profile content
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
@@ -45,40 +51,35 @@ export default function Profile() {
         {/* Profile information list */}
         <div className="border-t border-gray-200">
           <dl>
-            {/* Full name row */}
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Full name</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">John Doe</dd>
-            </div>
-
-            {/* Email row */}
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Email address</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">johndoe@example.com</dd>
-            </div>
-
-            {/* Member since row */}
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Member since</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">January 1, 2023</dd>
-            </div>
+            {[
+              { label: "Full name", value: user?.name },
+              { label: "Email address", value: user?.email },
+              { label: "Country", value: user?.country },
+              { label: "Disease", value: user?.disease },
+            ].map(({ label, value }, index) => (
+              <div
+                key={label}
+                className={`${index % 2 === 0 ? "bg-gray-50" : "bg-white"} px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6`}
+              >
+                <dt className="text-sm font-medium text-gray-500">{label}</dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{value || "N/A"}</dd>
+              </div>
+            ))}
           </dl>
         </div>
 
         {/* Action buttons */}
-        <div className="px-4 py-4 sm:px-6 border-t border-gray-200">
-          {/* Logout button */}
+        <div className="px-4 py-4 sm:px-6 border-t border-gray-200 flex justify-between">
           <button
             onClick={handleLogout}
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            className="py-2 px-4 rounded-md text-white bg-red-600 hover:bg-red-700"
           >
             Log out
           </button>
 
-          {/* Back to map button */}
           <button
             onClick={() => router.push("/")}
-            className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            className="py-2 px-4 rounded-md text-gray-700 bg-gray-100 hover:bg-gray-200"
           >
             Back to Map
           </button>
