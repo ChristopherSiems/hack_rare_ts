@@ -27,7 +27,7 @@ export default function SignIn() {
 
       if (res.ok) {
         alert("Sign in successful!");
-        router.push("/auth/signin");
+        router.push("/");
       } else {
         alert(data.error || "Something went wrong");
       }
