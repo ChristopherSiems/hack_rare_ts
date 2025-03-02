@@ -180,8 +180,8 @@ export default function Home() {
                 onClick={() => isVisible && handleMarkerClick(marker)}
               >
                 <div className="flex flex-col gap-0.5 md:gap-1 justify-between items-center">
-                  {/* Marker Icon */}
-                  <div className="rounded-full border-[1.5px] md:border-[2px] lg:border-[3px] border-[#171717] object-cover bg-white overflow-hidden aspect-square w-full">
+                  {/* Marker Icon with Light Gray Background and Red Border */}
+                  <div className="rounded-full border-[1.5px] md:border-[2px] lg:border-[3px] border-red-600 object-cover bg-gray-200 overflow-hidden aspect-square w-full">
                     <Image 
                       src={marker.icon} 
                       alt={marker.title}
@@ -195,9 +195,9 @@ export default function Home() {
                     />
                   </div>
                   
-                  {/* Marker pointer (triangle) */}
+                  {/* Marker pointer (triangle) - changed to red */}
                   <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.72058 6.25115C6.32718 6.65999 5.67282 6.65999 5.27942 6.25116L1.13426 1.94338C0.52294 1.30807 0.973177 0.25 1.85484 0.25L10.1452 0.249999C11.0268 0.249999 11.4771 1.30807 10.8657 1.94337L6.72058 6.25115Z" fill="#171717"/>
+                    <path d="M6.72058 6.25115C6.32718 6.65999 5.67282 6.65999 5.27942 6.25116L1.13426 1.94338C0.52294 1.30807 0.973177 0.25 1.85484 0.25L10.1452 0.249999C11.0268 0.249999 11.4771 1.30807 10.8657 1.94337L6.72058 6.25115Z" fill="#DC2626"/>
                   </svg>
                 </div>
               </div>
@@ -226,7 +226,7 @@ export default function Home() {
           )}
           
           <button 
-            className="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+            className="mt-4 w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
             onClick={() => {
               // You can implement navigation or additional actions here
               setSelectedMarker(null);

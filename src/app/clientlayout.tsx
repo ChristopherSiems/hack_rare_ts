@@ -324,48 +324,48 @@ export default function ClientLayout({
         </div>
       )}
 
-      {/* Navigation Bar */}
-      <div className="w-full border-t border-blue-300 fixed bottom-0 bg-white z-40">
-        <div className="w-full mx-auto px-6">
-          <div className="flex justify-around py-3">
-            {/* Event Button */}
-            <button className="flex flex-col items-center focus:outline-none group">
-              <div className="w-10 h-10 rounded-full border border-blue-400 flex items-center justify-center mb-1 group-hover:border-red-500 group-hover:bg-red-100 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500 group-hover:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <span className="text-blue-500 text-sm group-hover:text-red-500 transition-colors">Event</span>
-            </button>
-
-            {/* Username Button */}
-            <button
-              className="flex flex-col items-center focus:outline-none group"
-              onClick={handleUsernameClick}
-            >
-              <div className="w-10 h-10 rounded-full border border-blue-400 flex items-center justify-center mb-1 group-hover:border-red-500 group-hover:bg-red-100 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500 group-hover:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-              <span className="text-blue-500 text-sm group-hover:text-red-500 transition-colors">Username</span>
-            </button>
-
-            {/* Chat Button */}
-            <button 
-              className="flex flex-col items-center focus:outline-none group" 
-              onClick={() => setShowChat(!showChat)}
-            >
-              <div className={`w-10 h-10 rounded-full border border-blue-400 flex items-center justify-center mb-1 group-hover:border-red-500 group-hover:bg-red-100 transition-colors ${showChat ? 'border-red-500 bg-red-100' : ''}`}>
-                <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 text-blue-500 group-hover:text-red-500 ${showChat ? 'text-red-500' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg>
-              </div>
-              <span className={`text-blue-500 text-sm group-hover:text-red-500 transition-colors ${showChat ? 'text-red-500' : ''}`}>Chat</span>
-            </button>
+     {/* Navigation Bar */}
+  <div className="w-full border-t border-blue-300 fixed bottom-0 bg-white z-40">
+    <div className="w-full mx-auto px-6">
+      <div className="flex justify-around py-3">
+        {/* Event Button */}
+        <button className="flex flex-col items-center focus:outline-none group">
+          <div className="w-10 h-10 rounded-full border border-blue-400 flex items-center justify-center mb-1 group-hover:border-red-500 group-hover:bg-red-100 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500 group-hover:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
           </div>
-        </div>
+          <span className="text-blue-500 text-sm group-hover:text-red-500 transition-colors">Event</span>
+        </button>
+        
+        {/* Username Button */}
+        <button
+          className="flex flex-col items-center focus:outline-none group"
+          onClick={handleUsernameClick}
+        >
+          <div className="w-10 h-10 rounded-full border border-blue-400 flex items-center justify-center mb-1 group-hover:border-red-500 group-hover:bg-red-100 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500 group-hover:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <span className="text-blue-500 text-sm group-hover:text-red-500 transition-colors">Username</span>
+        </button>
+        
+        {/* Chat Button */}
+        <button
+          className="flex flex-col items-center focus:outline-none group"
+          onClick={() => setShowChat(!showChat)}
+        >
+          <div className={`w-10 h-10 rounded-full border border-blue-400 flex items-center justify-center mb-1 group-hover:border-red-500 group-hover:bg-red-100 transition-colors ${showChat ? 'border-red-500 bg-red-100' : ''}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 text-blue-500 group-hover:text-red-500 ${showChat ? 'text-red-500' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+          </div>
+          <span className={`text-blue-500 text-sm group-hover:text-red-500 transition-colors ${showChat ? 'text-red-500' : ''}`}>Chat</span>
+        </button>
       </div>
-    </>
+    </div>
+  </div>
+  </>
   );
-}
+  }

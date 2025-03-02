@@ -19,14 +19,14 @@ export const fixedMarkers: Marker[] = [
     id: 2, 
     xPercent: 15, 
     yPercent: 35, 
-    icon: "/userx.svg", 
+    icon: "/org/org1.png", 
     title: "Los Angeles Expo"
   },
   { 
     id: 3, 
     xPercent: 17, 
     yPercent: 25, 
-    icon: "/userx.svg", 
+    icon: "/org/org2.png", 
     title: "Toronto Summit"
   },
   
@@ -35,14 +35,14 @@ export const fixedMarkers: Marker[] = [
     id: 4, 
     xPercent: 28, 
     yPercent: 60, 
-    icon: "/userx.svg", 
+    icon: "/org/org3.jpg", 
     title: "São Paulo Festival"
   },
   { 
     id: 5, 
     xPercent: 25, 
     yPercent: 65, 
-    icon: "/userx.svg", 
+    icon: "/org/org4.png", 
     title: "Buenos Aires Conference"
   },
   
@@ -51,21 +51,21 @@ export const fixedMarkers: Marker[] = [
     id: 6, 
     xPercent: 47, 
     yPercent: 28, 
-    icon: "/userx.svg", 
+    icon: "/org/org5.webp", 
     title: "London Exhibition"
   },
   { 
     id: 7, 
     xPercent: 49, 
     yPercent: 30, 
-    icon: "/userx.svg", 
+    icon: "/org/org6.png", 
     title: "Paris Event"
   },
   { 
     id: 8, 
     xPercent: 52, 
     yPercent: 26, 
-    icon: "/userx.svg", 
+    icon: "/org/org7.png", 
     title: "Berlin Summit"
   },
   
@@ -74,29 +74,22 @@ export const fixedMarkers: Marker[] = [
     id: 9, 
     xPercent: 75, 
     yPercent: 32, 
-    icon: "/userx.svg", 
+    icon: "/org/org8.png", 
     title: "Tokyo Tech Expo"
   },
   { 
     id: 10, 
     xPercent: 70, 
     yPercent: 30, 
-    icon: "/userx.svg", 
+    icon: "/org/org9.png", 
     title: "Seoul Digital Forum"
   },
   { 
     id: 11, 
     xPercent: 68, 
     yPercent: 35, 
-    icon: "/userx.svg", 
+    icon: "/org/org10.webp", 
     title: "Shanghai Business Summit"
-  },
-  { 
-    id: 12, 
-    xPercent: 65, 
-    yPercent: 40, 
-    icon: "/userx.svg", 
-    title: "Mumbai Conference"
   },
   
   // Africa
@@ -104,14 +97,14 @@ export const fixedMarkers: Marker[] = [
     id: 13, 
     xPercent: 50, 
     yPercent: 45, 
-    icon: "/userx.svg", 
+    icon: "/org/org11.webp", 
     title: "Cairo Summit"
   },
   { 
     id: 14, 
     xPercent: 47, 
     yPercent: 60, 
-    icon: "/userx.svg", 
+    icon: "/org/org12.jpg", 
     title: "Johannesburg Forum"
   },
   
@@ -120,14 +113,14 @@ export const fixedMarkers: Marker[] = [
     id: 15, 
     xPercent: 85, 
     yPercent: 70, 
-    icon: "/userx.svg", 
+    icon: "/org/org_india.jpg", 
     title: "Sydney Convention"
   },
   { 
     id: 16, 
     xPercent: 88, 
     yPercent: 65, 
-    icon: "/userx.svg", 
+    icon: "/org/org13.png", 
     title: "Melbourne Tech Week"
   }
 ];
