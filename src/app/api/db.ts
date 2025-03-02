@@ -7,14 +7,7 @@ if (!MONGODB_URI) {
   );
 }
 
-console.log("MONGODB_URI:", process.env.MONGODB_URI);
-let client: any;
-try {
-  client = await MongoClient.connect(MONGODB_URI);
-  console.log("✅ Connected to MongoDB");
-} catch (error) {
-  console.error("❌ MongoDB Connection Error:", error);
-}
+const client = await MongoClient.connect(MONGODB_URI);
 
 const db = client.db("hackrare");
 export const users = db.collection("users");

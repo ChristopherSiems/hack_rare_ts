@@ -19,14 +19,14 @@ const SAMPLE_DISEASES = [
 export default function SignUp() {
   // Initialize router for navigation after signup
   const router = useRouter();
-  
+
   // State for form inputs
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disease, setDisease] = useState("");
   const [country, setCountry] = useState("");
-  
+
   // State for disease suggestions
   const [diseases, setDiseases] = useState<string[]>([]);
   const [filteredDiseases, setFilteredDiseases] = useState<string[]>([]);
@@ -60,7 +60,7 @@ export default function SignUp() {
         setIsLoading(false);
       }
     };
-    
+
     fetchDiseases();
   }, []);
 
@@ -68,20 +68,20 @@ export default function SignUp() {
   const handleDiseaseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setDisease(value);
-    
+
     if (value.trim() === '') {
-        setFilteredDiseases([]); 
-        setShowSuggestions(false);
+      setFilteredDiseases([]);
+      setShowSuggestions(false);
     } else {
-        const searchTerm = value.toLowerCase();
-        const filtered = diseases
-            .filter(d => d.toLowerCase().startsWith(searchTerm)) // Use startsWith instead of includes
-            .slice(0, 5); // Limit to 5 suggestions
-        
-        setFilteredDiseases(filtered);
-        setShowSuggestions(filtered.length > 0);
+      const searchTerm = value.toLowerCase();
+      const filtered = diseases
+        .filter(d => d.toLowerCase().startsWith(searchTerm)) // Use startsWith instead of includes
+        .slice(0, 5); // Limit to 5 suggestions
+
+      setFilteredDiseases(filtered);
+      setShowSuggestions(filtered.length > 0);
     }
-};
+  };
 
   // Select disease from suggestions
   const selectDisease = (selected: string) => {
@@ -92,7 +92,7 @@ export default function SignUp() {
   // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const res = await fetch("/api/users/sign_up", {
         method: "POST",
@@ -105,13 +105,13 @@ export default function SignUp() {
       if (res.ok) {
         // Store user information in localStorage
         localStorage.setItem("userEmail", email);
-        localStorage.setItem("userData", JSON.stringify({ 
-          name, 
-          email, 
-          disease, 
-          country 
+        localStorage.setItem("userData", JSON.stringify({
+          name,
+          email,
+          disease,
+          country
         }));
-        
+
         alert("Signup successful!");
         router.push("/auth/signin");
       } else {
@@ -135,7 +135,7 @@ export default function SignUp() {
           </p>
         )}
       </div>
-      
+
       {/* Registration form */}
       <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
         <div className="rounded-md shadow-sm -space-y-px">
@@ -156,7 +156,7 @@ export default function SignUp() {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          
+
           {/* Email input field */}
           <div>
             <label htmlFor="email-address" className="sr-only">
@@ -174,7 +174,7 @@ export default function SignUp() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          
+
           {/* Password input field */}
           <div>
             <label htmlFor="password" className="sr-only">
@@ -218,13 +218,13 @@ export default function SignUp() {
                 }
               }}
             />
-            
+
             {/* Suggestions dropdown */}
             {showSuggestions && filteredDiseases.length > 0 && (
               <div className="absolute z-10 w-full bg-white text-black border border-gray-300 rounded-b-md shadow-lg max-h-60 overflow-y-auto">
                 <ul className="py-1">
                   {filteredDiseases.map((suggestion, index) => (
-                    <li 
+                    <li
                       key={index}
                       className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
                       onClick={() => selectDisease(suggestion)}
@@ -240,7 +240,7 @@ export default function SignUp() {
               </div>
             )}
           </div>
-        
+
           {/* Country */}
           <div>
             <label htmlFor="country" className="sr-only">
@@ -269,7 +269,7 @@ export default function SignUp() {
             Sign up
           </button>
         </div>
-        
+
         {/* Link to signin page */}
         <div className="text-center">
           <p className="text-sm text-gray-600">
