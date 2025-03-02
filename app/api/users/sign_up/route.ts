@@ -17,15 +17,14 @@ export async function POST(req: Request) {
     }
 
     // Hash the password (await is required)
-    const hashedPassword = await hash(body.password, 11);
+    const hash_pwd = await hash(body.password, 11);
 
     // Insert new user into the database
     const result = await users.insertOne({
       email: email,
-      password: hashedPassword,
-      age: body.age,
+      name: body.name,
+      password: hash_pwd,
       country: body.country,
-      patient: body.patient,
       disease: body.disease,
     });
 
