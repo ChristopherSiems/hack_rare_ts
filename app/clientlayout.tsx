@@ -24,7 +24,7 @@ export default function ClientLayout({
     if (isLoggedIn) {
       router.push("/profile");
     } else {
-      router.push("/auth/signin");
+      router.push("/auth/user");
     }
   };
 
