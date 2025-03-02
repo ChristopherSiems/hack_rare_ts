@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+
 export default function Profile() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);

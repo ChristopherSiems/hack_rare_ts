@@ -96,7 +96,7 @@ export default function EventsPage() {
         </div>
       </main>
 
-      <footer className="bg-gray-800 text-white text-center py-6">
+      <footer className="bg-gray-800 text-white text-center py-4">
         <p>© 2025 Hack Rare LabBrats. All rights reserved.</p>
       </footer>
     </div>

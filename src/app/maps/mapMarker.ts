@@ -14,114 +14,108 @@ export type Marker = {
 // These positions are percentages of the map size and should be directly on land masses
 // You may need to adjust these values to match your specific map
 export const fixedMarkers: Marker[] = [
-  // North America
   { 
     id: 2, 
     xPercent: 15, 
     yPercent: 35, 
     icon: "/org/org1.png", 
-    title: "Los Angeles Expo"
+    title: "Rare Desease Day"
   },
   { 
     id: 3, 
     xPercent: 17, 
     yPercent: 25, 
-    icon: "/org/org2.png", 
-    title: "Toronto Summit"
+    icon: "/org/NORD.png", 
+    title: "NORD"
   },
   
-  // South America
   { 
     id: 4, 
     xPercent: 28, 
     yPercent: 60, 
     icon: "/org/org3.jpg", 
-    title: "São Paulo Festival"
+    title: "MENA Congress"
   },
   { 
     id: 5, 
     xPercent: 25, 
     yPercent: 65, 
     icon: "/org/org4.png", 
-    title: "Buenos Aires Conference"
+    title: "Alexion"
   },
   
-  // Europe
   { 
     id: 6, 
     xPercent: 47, 
     yPercent: 28, 
     icon: "/org/org5.webp", 
-    title: "London Exhibition"
+    title: "10X GENOMICS"
   },
   { 
     id: 7, 
     xPercent: 49, 
     yPercent: 30, 
-    icon: "/org/org6.png", 
-    title: "Paris Event"
+    icon: "/org/everylife.png", 
+    title: "Every Life Foundation"
   },
   { 
     id: 8, 
     xPercent: 52, 
     yPercent: 26, 
-    icon: "/org/org7.png", 
-    title: "Berlin Summit"
+    icon: "/org/EURORDIS.png", 
+    title: "European Organisation for Rare Disease"
   },
   
-  // Asia
   { 
     id: 9, 
     xPercent: 75, 
     yPercent: 32, 
     icon: "/org/org8.png", 
-    title: "Tokyo Tech Expo"
+    title: "ADCY5.ORG"
   },
   { 
     id: 10, 
     xPercent: 70, 
     yPercent: 30, 
-    icon: "/org/org9.png", 
-    title: "Seoul Digital Forum"
+    icon: "/org/globalgene.png", 
+    title: "Global Genes"
   },
   { 
     id: 11, 
     xPercent: 68, 
     yPercent: 35, 
-    icon: "/org/org10.webp", 
-    title: "Shanghai Business Summit"
+    icon: "/org/milafoundation.png", 
+    title: "Mila's Meracle Fundation"
   },
   
-  // Africa
   { 
     id: 13, 
     xPercent: 50, 
     yPercent: 45, 
-    icon: "/org/org11.webp", 
-    title: "Cairo Summit"
+    icon: "/org/RDCRN.jpg", 
+    title: "Rare Diseases Clinical Research Newtork"
   },
   { 
     id: 14, 
     xPercent: 47, 
     yPercent: 60, 
-    icon: "/org/org12.jpg", 
-    title: "Johannesburg Forum"
+    icon: "/org/rarediseaseuk.png", 
+    title: "Rare Disease UK"
   },
   
-  // Oceania
   { 
     id: 15, 
     xPercent: 85, 
     yPercent: 70, 
-    icon: "/org/org_india.jpg", 
-    title: "Sydney Convention"
+    icon: "/org/orphanet.webp", 
+    title: "Orphanet"
   },
   { 
     id: 16, 
     xPercent: 88, 
     yPercent: 65, 
-    icon: "/org/org13.png", 
-    title: "Melbourne Tech Week"
+    icon: "/org/rarediseaseinter.jpeg", 
+    title: "Rare Diseases International"
   }
 ];
 
