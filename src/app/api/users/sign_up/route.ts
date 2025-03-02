@@ -19,13 +19,36 @@ export async function POST(req: Request) {
     // Hash the password (await is required)
     const hash_pwd = await hash(body.password, 11);
 
+    let country: string;
+    const lat = body.latitude;
+    const long = body.longitude;
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`,
+      );
+      const data = await res.json();
+
+      // Ensure we correctly extract the country name
+      if (data.address && data.address.country) {
+        country = data.address.country;
+      } else {
+        console.error("Country not found in response:", data);
+        country = "unknown";
+      }
+    } catch (error) {
+      console.error("Error fetching country:", error);
+      country = "unknown";
+    }
+
     // Insert new user into the database
     const result = await users.insertOne({
       email: email,
       name: body.name,
       password: hash_pwd,
-      country: body.country,
+      country: country,
       disease: body.disease,
+      latitude: body.latitude,
+      longitude: body.longitude,
     });
 
     return NextResponse.json(

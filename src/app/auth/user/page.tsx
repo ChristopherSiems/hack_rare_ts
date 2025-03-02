@@ -16,13 +16,14 @@ export default function SignUpOption() {
     e.preventDefault();
 
     // Check selected option and navigate accordingly
-    if (selectedOption === "option1" ) {
+    if (selectedOption === "option1") {
       // Redirect to this signup page if Option 1 is chosen
       router.push("/auth/signup");
     } else if (selectedOption === "option3") {
       // Redirect to another signup page for Option 3
-      router.push("/auth/organization");} 
-      else {
+      router.push("/auth/organization");
+    }
+    else {
       alert("Please select an option before submitting.");
     }
   };

@@ -7,7 +7,7 @@ import Link from "next/link"; // Import Link for client-side navigation
 export default function SignIn() {
   // Initialize router for navigation after login
   const router = useRouter();
-  
+
   // State for form inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,15 +15,23 @@ export default function SignIn() {
   // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const res = await fetch("/api/users/sign_in", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({email, password }),
+        body: JSON.stringify({ email, password }),
+        credentials: "include", // Ensures cookies are sent
       });
 
-      const data = await res.json();
+      let data;
+      const contentType = res.headers.get("content-type");
+
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json(); // Parse JSON if it's valid
+      } else {
+        data = { error: "Invalid response from server" };
+      }
 
       if (res.ok) {
         alert("Sign in successful!");
@@ -31,9 +39,9 @@ export default function SignIn() {
       } else {
         alert(data.error || "Something went wrong");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Signup error:", error);
-      alert("Internal Server Error");
+      alert(error.message || "Internal Server Error");
     }
   };
 
@@ -44,7 +52,7 @@ export default function SignIn() {
           Sign in to your account
         </h2>
       </div>
-      
+
       {/* Login form */}
       <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
         <div className="rounded-md shadow-sm -space-y-px">
@@ -65,7 +73,7 @@ export default function SignIn() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          
+
           {/* Password input field */}
           <div>
             <label htmlFor="password" className="sr-only">
@@ -94,7 +102,7 @@ export default function SignIn() {
             Sign in
           </button>
         </div>
-        
+
         {/* Link to signup page */}
         <div className="text-center">
           <p className="text-sm text-gray-600">
