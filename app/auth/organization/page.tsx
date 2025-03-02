@@ -16,28 +16,14 @@ export default function SignUp() {
   const [location, setLocation] = useState("");
 
   // Form submission handler
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    try {
-      const res = await fetch("/api/users/sign_up", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, disease, location }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert("Signup successful!");
-        router.push("/auth/signin");
-      } else {
-        alert(data.error || "Something went wrong");
-      }
-    } catch (error) {
-      console.error("Signup error:", error);
-      alert("Internal Server Error");
-    }
+    // Simple user registration (replace with real auth)
+    localStorage.setItem("isLoggedIn", "true");
+    
+    // Redirect to home page after signup
+    router.push("/");
   };
 
   return (
@@ -63,7 +49,7 @@ export default function SignUp() {
               autoComplete="name"
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Full name"
+              placeholder="Organization name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -118,7 +104,7 @@ export default function SignUp() {
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
               placeholder="Disease name"
-              value={disease}
+              value={password}
               onChange={(e) => setDisease(e.target.value)}
             />
           </div>
@@ -137,7 +123,7 @@ export default function SignUp() {
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
               placeholder="Location"
-              value={location}
+              value={password}
               onChange={(e) => setLocation(e.target.value)}
             />
           </div>
