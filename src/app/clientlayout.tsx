@@ -33,7 +33,7 @@ export default function ClientLayout({
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showChat, setShowChat] = useState(false);
-  
+
   // Chat state variables - integrated directly into this component
   const [chatState, setChatState] = useState<'conversations' | 'chat'>('conversations');
   const [currentUserId] = useState<string>('current-user');
@@ -43,7 +43,7 @@ export default function ClientLayout({
       participantId: 'user1',
       participantName: 'Alex Johnson',
       participantAvatar: 'A',
-      lastMessage: 'Hey, how are you doing?',
+      lastMessage: 'Hey, I heard about what\'s going on. I...',
       lastMessageTime: new Date(Date.now() - 1000 * 60 * 30), // 30 mins ago
       unreadCount: 2,
     },
@@ -52,7 +52,7 @@ export default function ClientLayout({
       participantId: 'user2',
       participantName: 'Robin Smith',
       participantAvatar: 'R',
-      lastMessage: 'Can we meet tomorrow?',
+      lastMessage: 'Can we meet tomorrow? I\'d love to chat with...',
       lastMessageTime: new Date(Date.now() - 1000 * 60 * 60 * 24), // Yesterday
       unreadCount: 0,
     },
@@ -61,7 +61,7 @@ export default function ClientLayout({
       participantId: 'user3',
       participantName: 'Casey Williams',
       participantAvatar: 'C',
-      lastMessage: 'I sent you the files',
+      lastMessage: 'I sent you the link, hopefully they can help...',
       lastMessageTime: new Date(Date.now() - 1000 * 60 * 60 * 24), // Yesterday
       unreadCount: 0,
     },
@@ -80,7 +80,7 @@ export default function ClientLayout({
   const handleUsernameClick = () => {
     console.log("Username clicked, isLoggedIn:", isLoggedIn);
     console.log("localStorage value:", localStorage.getItem("isLoggedIn"));
-    
+
     if (isLoggedIn) {
       console.log("Navigating to profile page");
       router.push("/profile");
@@ -89,7 +89,7 @@ export default function ClientLayout({
       router.push("/auth/signin");
     }
   };
-  
+
   // Reset chat state when closing
   const closeChat = () => {
     setChatState('conversations');
@@ -100,17 +100,17 @@ export default function ClientLayout({
   const formatTime = (date: Date) => {
     const now = new Date();
     const diff = now.getTime() - date.getTime();
-    
+
     // If less than 24 hours, show time
     if (diff < 24 * 60 * 60 * 1000) {
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
-    
+
     // If less than 7 days, show day name
     if (diff < 7 * 24 * 60 * 60 * 1000) {
       return date.toLocaleDateString([], { weekday: 'short' });
     }
-    
+
     // Otherwise show date
     return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
   };
@@ -118,16 +118,16 @@ export default function ClientLayout({
   // Open a specific chat
   const openChat = (conversation: Conversation) => {
     setCurrentConversation(conversation);
-    
+
     // Mark conversation as read
-    setConversations(prevConversations => 
-      prevConversations.map(conv => 
-        conv.id === conversation.id 
-          ? { ...conv, unreadCount: 0 } 
+    setConversations(prevConversations =>
+      prevConversations.map(conv =>
+        conv.id === conversation.id
+          ? { ...conv, unreadCount: 0 }
           : conv
       )
     );
-    
+
     // Fetch or set messages for this conversation
     setMessages([
       {
@@ -155,14 +155,14 @@ export default function ClientLayout({
         isRead: conversation.unreadCount === 0,
       },
     ]);
-    
+
     setChatState('chat');
   };
 
   // Send a new message
   const sendMessage = () => {
     if (!newMessage.trim() || !currentConversation) return;
-    
+
     // Create a new message
     const message: Message = {
       id: Date.now().toString(),
@@ -172,26 +172,35 @@ export default function ClientLayout({
       timestamp: new Date(),
       isRead: true,
     };
-    
+
     // Add message to the current conversation
     setMessages([...messages, message]);
-    
+
     // Update the conversation with the new last message
-    setConversations(prevConversations => 
-      prevConversations.map(conv => 
-        conv.id === currentConversation.id 
-          ? { 
-              ...conv, 
-              lastMessage: newMessage,
-              lastMessageTime: new Date(),
-            } 
+    setConversations(prevConversations =>
+      prevConversations.map(conv =>
+        conv.id === currentConversation.id
+          ? {
+            ...conv,
+            lastMessage: newMessage,
+            lastMessageTime: new Date(),
+          }
           : conv
       )
     );
-    
+
     // Clear the input
     setNewMessage('');
   };
+
+  const handleChatPress = () => {
+    console.log("logged?" + isLoggedIn)
+    if (!isLoggedIn) {
+      router.push("/auth/signin");
+      return;
+    }
+    setShowChat(!showChat);
+  }
 
   // Handle Enter key press
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -214,18 +223,18 @@ export default function ClientLayout({
       <main className="flex-1 overflow-auto">
         {children}
       </main>
-      
+
       {/* Enhanced Chat Interface */}
       {showChat && (
         <div className="fixed bottom-20 right-4 w-80 md:w-96 h-96 bg-white rounded-lg shadow-xl flex flex-col overflow-hidden z-50 border border-gray-200">
           {/* Header */}
           <div className="bg-blue-500 text-white p-3 flex justify-between items-center">
             <h3 className="font-medium">
-              {chatState === 'conversations' 
-                ? 'Messages' 
+              {chatState === 'conversations'
+                ? 'Messages'
                 : currentConversation?.participantName}
             </h3>
-            <button 
+            <button
               onClick={closeChat}
               className="text-white hover:text-gray-200"
               aria-label="Close chat"
@@ -233,14 +242,14 @@ export default function ClientLayout({
               <X size={20} />
             </button>
           </div>
-          
+
           {/* Content */}
           <div className="flex-1 overflow-y-auto">
             {chatState === 'conversations' ? (
               // Conversations list
               <div>
                 {conversations.map(conversation => (
-                  <div 
+                  <div
                     key={conversation.id}
                     onClick={() => openChat(conversation)}
                     className="flex items-center p-3 border-b hover:bg-gray-50 cursor-pointer"
@@ -275,15 +284,14 @@ export default function ClientLayout({
               // Individual chat
               <div className="p-3 space-y-3">
                 {messages.map(message => (
-                  <div 
+                  <div
                     key={message.id}
                     className={`flex ${message.senderId === currentUserId ? 'justify-end' : 'justify-start'}`}
                   >
-                    <div className={`max-w-xs px-3 py-2 rounded-lg ${
-                      message.senderId === currentUserId
-                        ? 'bg-blue-500 text-white rounded-br-none'
-                        : 'bg-gray-100 text-gray-800 rounded-bl-none'
-                    }`}>
+                    <div className={`max-w-xs px-3 py-2 rounded-lg ${message.senderId === currentUserId
+                      ? 'bg-blue-500 text-white rounded-br-none'
+                      : 'bg-gray-100 text-gray-800 rounded-bl-none'
+                      }`}>
                       <p>{message.content}</p>
                       <div className={`text-right text-xs mt-1 ${message.senderId === currentUserId ? 'text-blue-100' : 'text-gray-500'}`}>
                         {formatTime(message.timestamp)}
@@ -294,7 +302,7 @@ export default function ClientLayout({
               </div>
             )}
           </div>
-          
+
           {/* Input area (only shown in chat view) */}
           {chatState === 'chat' && (
             <div className="p-3 border-t">
@@ -310,11 +318,10 @@ export default function ClientLayout({
                 <button
                   onClick={sendMessage}
                   disabled={!newMessage.trim()}
-                  className={`ml-2 p-2 rounded-full ${
-                    newMessage.trim() 
-                      ? 'bg-blue-500 text-white hover:bg-blue-700' 
-                      : 'bg-gray-200 text-gray-400'
-                  }`}
+                  className={`ml-2 p-2 rounded-full ${newMessage.trim()
+                    ? 'bg-blue-500 text-white hover:bg-blue-700'
+                    : 'bg-gray-200 text-gray-400'
+                    }`}
                   aria-label="Send message"
                 >
                   <Send size={20} />
@@ -340,7 +347,7 @@ export default function ClientLayout({
                 <span className="text-blue-500 text-sm group-hover:text-blue-500 transition-colors">Event</span>
               </button>
             </Link>
-            
+
             {/* Username Button */}
             <button
               className="flex flex-col items-center focus:outline-none group"
@@ -353,11 +360,11 @@ export default function ClientLayout({
               </div>
               <span className="text-blue-500 text-sm group-hover:text-blue-500 transition-colors">Username</span>
             </button>
-            
+
             {/* Chat Button */}
             <button
               className="flex flex-col items-center focus:outline-none group"
-              onClick={() => setShowChat(!showChat)}
+              onClick={handleChatPress}
             >
               <div className={`w-10 h-10 rounded-full border border-blue-400 flex items-center justify-center mb-1 group-hover:border-2 group-hover:border-blue-400 group-hover:bg-blue-50 transition-colors ${showChat ? 'border-2 border-blue-400 bg-blue-50' : ''}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 text-blue-500 group-hover:text-blue-500 ${showChat ? 'text-blue-500' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
