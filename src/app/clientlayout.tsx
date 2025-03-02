@@ -205,10 +205,12 @@ export default function ClientLayout({
     <div className="flex flex-col min-h-screen">
       {/* Header with logo */}
       <header className="bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md py-4">
-        <div className="px-6">
-          <h1 className="text-2xl font-bold">LabBrats</h1>
-        </div>
-      </header>
+      <div className="px-6">
+        <Link href="/" className="inline-block">
+          <h1 className="text-2xl font-bold cursor-pointer">LabBrats</h1>
+        </Link>
+      </div>
+    </header>
 
       {/* Main content */}
       <main className="flex-1 overflow-auto">
